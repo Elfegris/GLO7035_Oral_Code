@@ -1,0 +1,30 @@
+version: "3.8"
+
+services: 
+
+    redis:
+        image: redis:6.0.9
+        logging:
+            driver: "none"
+        # ports:
+        #     - "6379:6379"
+    mongodb:
+        image: mongo:4.4
+        logging:
+            driver: "none"
+        # ports:
+        #     - "27017:27017"
+    demo_redis:
+        build: 
+            context: ./demo
+            dockerfile: dockerfile
+        command: python -u /app/TestVitesse.py
+        # ports:
+        #     - "27017:27017"
+        #     - "6379:6379"
+        volumes:
+            - ./demo:/app
+        depends_on: 
+            - mongodb
+            - redis
+     
